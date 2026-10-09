@@ -14,8 +14,9 @@ import hermes from './hermes.mjs'
 import kilocode from './kilocode.mjs'
 import opencode from './opencode.mjs'
 import tarsHandoff from './tars-handoff.mjs'
+import microsoftScout from './microsoft-scout.mjs'
 
-export const HARNESSES = [claudeCode, codex, cursor, antigravity, hermes, kilocode, opencode, tarsHandoff]
+export const HARNESSES = [claudeCode, codex, cursor, antigravity, hermes, kilocode, opencode, tarsHandoff, microsoftScout]
 
 export const harnessById = (id) => HARNESSES.find((h) => h.id === id) || null
 

@@ -515,7 +515,8 @@ body {
   display: flex;
 }
 
-.thread-pop .handoff-details {
+.thread-pop .handoff-details,
+.thread-pop .scout-details {
   max-height: min(300px, 35vh);
   overflow: auto;
   font-size: 12px;
@@ -525,7 +526,9 @@ body {
 
 .handoff-request,
 .handoff-result,
-.handoff-times {
+.handoff-times,
+.scout-summary,
+.scout-times {
   white-space: pre-wrap;
   margin-bottom: 8px;
 }

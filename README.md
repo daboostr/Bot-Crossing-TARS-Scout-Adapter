@@ -39,6 +39,27 @@ New-session and Open are unavailable for handoffs because no execution-session
 link is recorded. Completion means executor-reported completion, not user approval.
 Older quiet zones can be folded by the upstream "Hide dormant repos" setting.
 
+## Microsoft Scout sessions
+
+The `microsoft-scout` adapter reads local session metadata from the current user's
+`.scout/copilot/session-store.db` using a read-only SQLite connection. Set
+`BOT_CROSSING_SCOUT_DB` to an absolute database filename to override the source.
+All sessions share one **Microsoft Scout** zone, irrespective of their working
+directory. They appear alongside the separate TARS handoff zone.
+
+Only session IDs, summaries, and creation/update timestamps are read. Messages,
+checkpoints, tool outputs, usage payloads, and transcript contents are not read
+or sent to the browser. Empty titles receive a stable session-ID label.
+All session records are scanned; upstream dormant-zone hiding and the maximum-bot
+setting can limit what is rendered. Those display limits do not delete sessions.
+
+The store has no authoritative running, completion, approval, or unread fields.
+Session bots are therefore idle or dormant, not guessed to be running just because
+their timestamps are recent. Cards show the recorded metadata, without invented
+progress. Open and New conversation are disabled until a supported Scout session
+navigation integration exists. Archive only hides the bot in Bot Crossing.
+Database/schema failures are surfaced through the adapter diagnostics.
+
 This version does not provide GitHub cloud-agent tracking, Cowork events,
 executor heartbeats, custom GLB avatars, or the planned Marine environment yet.
 The existing supported local coding-agent adapters continue to work.
@@ -92,7 +113,7 @@ somebody writing that adapter.
 
 | Harness | Status |
 | --- | --- |
-| **[Microsoft Scout](https://aka.ms/scout)** (Microsoft) | **Supported via TARS Voice handoffs** - read-only `queue` / `done` job tracking through the `tars-handoff` adapter, with reported states, requests, and results. General Scout chat sessions and automations without handoff jobs are not scanned yet. |
+| **[Microsoft Scout](https://aka.ms/scout)** (Microsoft) | **Supported** - read-only local session metadata through `microsoft-scout`, grouped in one Scout zone, plus TARS Voice `queue` / `done` job tracking through `tars-handoff`. Session execution states and per-session deep links are not available. |
 | **[Claude Code](https://claude.com/claude-code)** (Anthropic) | ✅ **Supported** — desktop app and CLI, including worktrees and live-process detection |
 | **[Codex](https://developers.openai.com/codex/cli)** (OpenAI) | ✅ **Supported** — desktop, VS Code and CLI sessions, opened through `codex://` |
 | **[OpenCode](https://opencode.ai)** | ✅ **Supported** — top-level sessions from its own store; no per-thread link to open |

@@ -698,7 +698,7 @@ export class Hud {
     if (this.isPhone()) this.toggleSheet(false)
 
     this.$('.thread-pop .title').textContent = thread.title || 'Untitled thread'
-    const status = thread.handoff?.label || STATUS_LABEL[agent.status] || agent.status
+    const status = thread.handoff?.label || thread.scout?.label || STATUS_LABEL[agent.status] || agent.status
     const meta = this.$('.thread-pop .meta')
     const bits = [
       `<span class="tag"><i class="swatch" style="background:${hex(agent.trim.getHex())}"></i>${escapeHtml(status)}</span>`,
@@ -715,13 +715,19 @@ export class Hud {
     const pct = Math.round((this.actions.progressFor?.(thread.id) ?? 0) * 100)
     this.$('.thread-pop .progress > i').style.width = `${pct}%`
     this.$('.thread-pop .progress > i').style.background = hex(agent.trim.getHex())
-    this.$('.thread-pop .progress').hidden = Boolean(thread.handoff)
+    this.$('.thread-pop .progress').hidden = Boolean(thread.handoff || thread.scout)
     const details = this.$('.thread-pop .handoff-details')
     details.hidden = !thread.handoff
     this.$('.thread-pop .handoff-request').textContent = thread.handoff?.request || ''
     this.$('.thread-pop .handoff-result').textContent = thread.handoff?.result || 'No result reported yet.'
     this.$('.thread-pop .handoff-times').textContent = thread.handoff
       ? `Queued: ${thread.handoff.createdAt}${thread.handoff.completedAt ? `\nReported completion: ${thread.handoff.completedAt}` : ''}`
+      : ''
+    const scoutDetails = this.$('.thread-pop .scout-details')
+    scoutDetails.hidden = !thread.scout
+    this.$('.thread-pop .scout-summary').textContent = thread.scout?.summary || 'No session title recorded.'
+    this.$('.thread-pop .scout-times').textContent = thread.scout
+      ? `Created: ${thread.scout.createdAt}\nLast recorded activity: ${thread.scout.updatedAt}\nSession ID: ${thread.ref.sessionId}`
       : ''
     // Measured once per selection rather than per frame: placing the card beside its
     // astronaut needs its size sixty times a second, and asking the layout for it that
@@ -1154,6 +1160,12 @@ const TEMPLATE = `
     <div class="handoff-result"></div>
     <div class="handoff-times"></div>
     <div>Read-only. Archive hides this bot here; it does not complete or cancel the job.</div>
+  </div>
+  <div class="scout-details" hidden>
+    <strong>Scout session</strong>
+    <div class="scout-summary"></div>
+    <div class="scout-times"></div>
+    <div>Metadata only. Live execution, approval, and completion are not recorded in this store.</div>
   </div>
   <div class="pair">
     <button class="btn primary" id="btn-open" title="Open this thread in the harness it came from (Enter)">${ICON.open} Open</button>
