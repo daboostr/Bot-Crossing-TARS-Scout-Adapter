@@ -1,4 +1,51 @@
-# Bot Crossing — your agent threads, as a colony
+# Bot Crossing - TARS Adapter
+
+A standalone adaptation of [Station Sciences' Bot Crossing](https://github.com/Station-Sciences/bot-crossing).
+The original environment and avatars remain intact. TARS Voice itself is not modified.
+
+## TARS handoffs
+
+The `tars-handoff` adapter reads the same `queue` and `done` JSON files that feed
+TARS's `bridge/inbox.mjs`. It does not scrape the generated HTML and does not write
+to, move, delete, or consume any handoff or spoken-reply files.
+
+By default the source is the current user's `.copilot/handoff` directory.
+Use `BOT_CROSSING_TARS_HANDOFF` to override it with an absolute directory.
+All handoffs appear in a **TARS Voice Handoffs** zone, with one bot per stable job ID.
+The application polls every five seconds.
+
+```powershell
+npm ci
+npm run build
+npm run serve
+```
+
+Open `http://127.0.0.1:5274`. Keep it on loopback: requests and results may contain
+private information. The public repository contains code and synthetic tests,
+not job data, transcripts, configuration, or personal models.
+
+Click a bot for its request, result, timestamps, and reported lifecycle state.
+Pending is not treated as running. Jobs marked `waiting-on-user` remain waiting
+even if stored in `done`. Completed jobs celebrate without pretending a PR merged.
+No completion percentage is inferred from file size. Attached conversation
+context and arbitrary fields are excluded from the browser response.
+
+Malformed or oversized records are skipped with a visible API warning; jobs
+moving between folders are deduplicated. Archive only hides a bot in this viewer.
+New-session and Open are unavailable for handoffs because no execution-session
+link is recorded. Completion means executor-reported completion, not user approval.
+Older quiet zones can be folded by the upstream "Hide dormant repos" setting.
+
+This version does not provide GitHub cloud-agent tracking, Cowork events,
+executor heartbeats, custom GLB avatars, or the planned Marine environment yet.
+The existing supported local coding-agent adapters continue to work.
+
+## Upstream documentation
+
+The original documentation follows. Licensing and asset credits are retained;
+references to the upstream application below describe its original behavior.
+
+## Bot Crossing - your agent threads, as a colony
 
 **[botcrossing.com](https://botcrossing.com)**
 

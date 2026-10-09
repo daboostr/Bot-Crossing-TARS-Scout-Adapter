@@ -30,6 +30,7 @@ import { MAX_AGENT_CAP } from '../core/settings.js'
 import { Particles } from '../agents/particles.js'
 import { Navigation } from '../agents/navigation.js'
 import { liveThreadsForColony } from './hidden-projects.js'
+import { handoffBehaviour } from '../../shared/handoff.mjs'
 
 /**
  * The colony: everything that turns a list of agent threads into a place.
@@ -79,6 +80,7 @@ export const STATUS_LABEL = {
 
 /** Thread → behaviour. First match wins, exactly like the board's auto-sort. */
 export function statusFor(thread, now = Date.now()) {
+  if (thread.handoff) return handoffBehaviour(thread.handoff.status)
   if (thread.hasError) return 'blocked'
   if (thread.running) return 'working'
   if (thread.prState === 'MERGED') return 'celebrating'

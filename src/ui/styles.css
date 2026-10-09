@@ -515,6 +515,25 @@ body {
   display: flex;
 }
 
+.thread-pop .handoff-details {
+  max-height: min(300px, 35vh);
+  overflow: auto;
+  font-size: 12px;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+
+.handoff-request,
+.handoff-result,
+.handoff-times {
+  white-space: pre-wrap;
+  margin-bottom: 8px;
+}
+
+.thread-pop [hidden] {
+  display: none !important;
+}
+
 /* The nib points back at the astronaut the card belongs to, and swaps sides with it. */
 .thread-pop .nib {
   position: absolute;

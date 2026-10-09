@@ -1,18 +1,18 @@
 {
-  "name": "bot-crossing",
+  "name": "bot-crossing-tars-adapter",
   "version": "1.0.0",
   "private": true,
   "type": "module",
-  "description": "A 3D colony sim where every coding-agent thread on your machine is a little astronaut building something.",
+  "description": "A standalone Bot Crossing viewer with a read-only TARS Voice handoff adapter.",
   "license": "MIT",
   "author": "Jarren Rocks",
-  "homepage": "https://botcrossing.com",
+  "homepage": "https://github.com/daboostr/Bot-Crossing-TARS-Adapter",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/jarrenrocks/bot-crossing.git"
+    "url": "git+https://github.com/daboostr/Bot-Crossing-TARS-Adapter.git"
   },
   "bugs": {
-    "url": "https://github.com/jarrenrocks/bot-crossing/issues"
+    "url": "https://github.com/daboostr/Bot-Crossing-TARS-Adapter/issues"
   },
   "keywords": [
     "claude-code",

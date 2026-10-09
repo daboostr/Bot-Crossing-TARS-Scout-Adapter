@@ -5,6 +5,12 @@ dist
 # paths of the repos you work in, so it stays out of the repository.
 data/*.json
 data/*.tmp
+data/
+.env
+.env.*
+!.env.example
+handoff/
+local-assets/
 
 # Per-machine Claude Code permissions — personal paths live in here.
 .claude/settings.local.json

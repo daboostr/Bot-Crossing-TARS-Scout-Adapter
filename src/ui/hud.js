@@ -619,7 +619,7 @@ export class Hud {
     // you leave the panel open.
     const signature =
       `${project.name}~${project.path}~${project.accent}~${project.selectedId}~${Math.floor(Date.now() / 60000)}~` +
-      project.threads.map((t) => `${t.id}:${t.status}:${t.title}:${t.lastActivityAt}`).join('|')
+      project.threads.map((t) => `${t.id}:${t.status}:${t.statusLabel}:${t.title}:${t.lastActivityAt}`).join('|')
     panel.classList.add('drilled')
     if (this._last.project === signature) return
     this._last.project = signature
@@ -632,7 +632,7 @@ export class Hud {
     path.textContent = project.path ? shortPath(project.path) : 'folder unknown'
     path.title = project.path || ''
     // Nothing to open a new thread in, and nothing to reveal, without a folder on disk.
-    this.$('#btn-new-session').disabled = !project.path
+    this.$('#btn-new-session').disabled = !project.path || project.threads.every((t) => t.canNewSession === false)
     this.$('#btn-reveal').disabled = !project.path
     this.$('#btn-copy-path').disabled = !project.path
 
@@ -651,7 +651,7 @@ export class Hud {
       b.type = 'button'
       b.className = `thread ${statusClass(t.status)}`
       b.setAttribute('aria-pressed', String(t.id === project.selectedId))
-      b.title = STATUS_LABEL[t.status] || t.status
+      b.title = t.statusLabel || STATUS_LABEL[t.status] || t.status
       b.innerHTML =
         '<i class="pip"></i>' +
         `<span class="t">${escapeHtml(t.title || 'Untitled thread')}</span>` +
@@ -698,7 +698,7 @@ export class Hud {
     if (this.isPhone()) this.toggleSheet(false)
 
     this.$('.thread-pop .title').textContent = thread.title || 'Untitled thread'
-    const status = STATUS_LABEL[agent.status] || agent.status
+    const status = thread.handoff?.label || STATUS_LABEL[agent.status] || agent.status
     const meta = this.$('.thread-pop .meta')
     const bits = [
       `<span class="tag"><i class="swatch" style="background:${hex(agent.trim.getHex())}"></i>${escapeHtml(status)}</span>`,
@@ -715,6 +715,14 @@ export class Hud {
     const pct = Math.round((this.actions.progressFor?.(thread.id) ?? 0) * 100)
     this.$('.thread-pop .progress > i').style.width = `${pct}%`
     this.$('.thread-pop .progress > i').style.background = hex(agent.trim.getHex())
+    this.$('.thread-pop .progress').hidden = Boolean(thread.handoff)
+    const details = this.$('.thread-pop .handoff-details')
+    details.hidden = !thread.handoff
+    this.$('.thread-pop .handoff-request').textContent = thread.handoff?.request || ''
+    this.$('.thread-pop .handoff-result').textContent = thread.handoff?.result || 'No result reported yet.'
+    this.$('.thread-pop .handoff-times').textContent = thread.handoff
+      ? `Queued: ${thread.handoff.createdAt}${thread.handoff.completedAt ? `\nReported completion: ${thread.handoff.completedAt}` : ''}`
+      : ''
     // Measured once per selection rather than per frame: placing the card beside its
     // astronaut needs its size sixty times a second, and asking the layout for it that
     // often is how a HUD starts costing frames.
@@ -723,7 +731,7 @@ export class Hud {
     // Only offered when there is something to dismiss. A third button on every card would
     // crowd the two that are always worth having, and "Viewed" on a thread that is not asking
     // for anything is a control with no effect.
-    this.$('#btn-viewed').hidden = !thread.unread
+    this.$('#btn-viewed').hidden = !thread.unread || Boolean(thread.handoff)
   }
 
   /**
@@ -1139,6 +1147,14 @@ const TEMPLATE = `
     <button class="btn icon ghost" id="btn-deselect" title="Deselect (Esc)">${ICON.close}</button>
   </div>
   <div class="progress"><i></i></div>
+  <div class="handoff-details" hidden>
+    <strong>Request</strong>
+    <div class="handoff-request"></div>
+    <strong>Result</strong>
+    <div class="handoff-result"></div>
+    <div class="handoff-times"></div>
+    <div>Read-only. Archive hides this bot here; it does not complete or cancel the job.</div>
+  </div>
   <div class="pair">
     <button class="btn primary" id="btn-open" title="Open this thread in the harness it came from (Enter)">${ICON.open} Open</button>
     <button class="btn" id="btn-viewed" title="Stop this thread asking for you until it moves on again (V)">${ICON.eye} Viewed</button>

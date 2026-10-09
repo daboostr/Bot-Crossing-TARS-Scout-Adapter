@@ -35,7 +35,7 @@ import { withErrands } from './game/errands.js'
  * can never silently drop an archive. Everything else is wiring.
  */
 
-const POLL_MS = 15000
+const POLL_MS = 5000
 const app = document.getElementById('app')
 
 app.insertAdjacentHTML(
@@ -427,6 +427,8 @@ function syncProject() {
       worktree: thread.worktree,
       lastActivityAt: thread.lastActivityAt,
       status: statusFor(thread, now),
+      statusLabel: thread.handoff?.label,
+      canNewSession: thread.canNewSession,
     }))
     // Whoever wants something first, then most recently touched — the same order of
     // importance the badges use above their heads.
