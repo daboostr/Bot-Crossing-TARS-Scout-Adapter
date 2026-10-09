@@ -25,7 +25,10 @@ private information. The public repository contains code and synthetic tests,
 not job data, transcripts, configuration, or personal models.
 
 Click a bot for its request, result, timestamps, and reported lifecycle state.
-Pending is not treated as running. Jobs marked `waiting-on-user` remain waiting
+Pending jobs use the working animation and scaffolding until completion. The
+card labels them "Pending (queued or executing)": the queue does not distinguish
+waiting for the executor from actual execution. This is a visualization convention,
+not proof of executor activity. Jobs marked `waiting-on-user` remain waiting
 even if stored in `done`. Completed jobs celebrate without pretending a PR merged.
 No completion percentage is inferred from file size. Attached conversation
 context and arbitrary fields are excluded from the browser response.
@@ -89,6 +92,7 @@ somebody writing that adapter.
 
 | Harness | Status |
 | --- | --- |
+| **[Microsoft Scout](https://aka.ms/scout)** (Microsoft) | **Supported via TARS Voice handoffs** - read-only `queue` / `done` job tracking through the `tars-handoff` adapter, with reported states, requests, and results. General Scout chat sessions and automations without handoff jobs are not scanned yet. |
 | **[Claude Code](https://claude.com/claude-code)** (Anthropic) | ✅ **Supported** — desktop app and CLI, including worktrees and live-process detection |
 | **[Codex](https://developers.openai.com/codex/cli)** (OpenAI) | ✅ **Supported** — desktop, VS Code and CLI sessions, opened through `codex://` |
 | **[OpenCode](https://opencode.ai)** | ✅ **Supported** — top-level sessions from its own store; no per-thread link to open |

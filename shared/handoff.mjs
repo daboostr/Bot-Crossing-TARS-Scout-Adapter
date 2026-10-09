@@ -1,5 +1,5 @@
 const STATES = {
-  pending: ['idle', 'Queued (execution not reported)'],
+  pending: ['working', 'Pending (queued or executing)'],
   running: ['working', 'Running (executor reported)'],
   'waiting-on-user': ['waiting', 'Waiting on you'],
   'ready-for-review': ['waiting', 'Ready for your review'],

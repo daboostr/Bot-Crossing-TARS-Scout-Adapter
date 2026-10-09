@@ -106,7 +106,7 @@ export function createTarsHandoff(rootPath = () =>
             createdAt,
             lastActivityAt,
             lastFocusedAt: 0,
-            running: status === 'running',
+            running: status === 'pending' || status === 'running',
             unread: status === 'waiting-on-user' || status === 'ready-for-review',
             hasError: status === 'failed',
             archived: false,
