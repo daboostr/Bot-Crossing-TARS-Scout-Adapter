@@ -1,18 +1,18 @@
 {
-  "name": "bot-crossing-tars-adapter",
+  "name": "bot-crossing-tars-scout-adapter",
   "version": "1.0.0",
   "private": true,
   "type": "module",
-  "description": "A standalone Bot Crossing viewer with a read-only TARS Voice handoff adapter.",
+  "description": "A standalone Bot Crossing viewer with read-only TARS Voice handoff and Microsoft Scout session adapters.",
   "license": "MIT",
   "author": "Jarren Rocks",
-  "homepage": "https://github.com/daboostr/Bot-Crossing-TARS-Adapter",
+  "homepage": "https://github.com/daboostr/Bot-Crossing-TARS-Scout-Adapter",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/daboostr/Bot-Crossing-TARS-Adapter.git"
+    "url": "git+https://github.com/daboostr/Bot-Crossing-TARS-Scout-Adapter.git"
   },
   "bugs": {
-    "url": "https://github.com/daboostr/Bot-Crossing-TARS-Adapter/issues"
+    "url": "https://github.com/daboostr/Bot-Crossing-TARS-Scout-Adapter/issues"
   },
   "keywords": [
     "claude-code",

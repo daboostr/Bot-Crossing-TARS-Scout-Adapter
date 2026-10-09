@@ -1,7 +1,12 @@
-# Bot Crossing - TARS Adapter
+# Bot Crossing - TARS & Scout Adapter
 
 A standalone adaptation of [Station Sciences' Bot Crossing](https://github.com/Station-Sciences/bot-crossing).
 The original environment and avatars remain intact. TARS Voice itself is not modified.
+
+![Bot Crossing showing TARS Voice handoff activity, with the TARS avatar at bottom right](docs/images/bot-crossing-tars-adapter.png)
+
+TARS Voice handoffs in action. Microsoft Scout session metadata is also supported
+in a separate Scout zone; that zone is not shown in this screenshot.
 
 ## TARS handoffs
 
